@@ -1,11 +1,11 @@
 <div align="center">
-  <img src="assets/hero.png" alt="delivery-audit" width="100%">
+  <img src="assets/hero-en.png" alt="delivery-audit" width="100%">
   <p>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-059669.svg" alt="MIT License"></a>
     <img src="https://img.shields.io/badge/trigger-explicit--only-DC2626.svg" alt="explicit invocation only">
     <img src="https://img.shields.io/badge/reviewers-codex%20%C2%B7%20claude%20%C2%B7%20subagents-101014.svg" alt="reviewers">
   </p>
-  <p><b>English</b> · <a href="README.zh-CN.md">简体中文</a></p>
+  <p><b>English</b> · <a href="README.zh-CN.md">Chinese</a></p>
 </div>
 
 # delivery-audit
@@ -20,9 +20,9 @@ Most real delivery failures are three kinds — the skill hunts them before anyt
 
 | Failure class | What it looks like |
 |---|---|
-| **臆想 — assumption as fact** | "should", "normally", "it prints 0 when done" — never checked |
-| **口径错误 — definition mismatch** | the progress counter reads 0 because every job crashed, not because the run finished |
-| **没看原始证据 — summary over source** | conclusions drawn from dashboards while the trace that would refute them sits unopened |
+| **Assumption as fact** | "should", "normally", "it prints 0 when done" — never checked |
+| **Definition mismatch** | the progress counter reads 0 because every job crashed, not because the run finished |
+| **Summary over source** | conclusions drawn from dashboards while the trace that would refute them sits unopened |
 
 ## How it works
 
@@ -53,7 +53,7 @@ Reviewers must run real commands (a read-only sandbox makes verification theatri
 
 ## Approval gate
 
-**All changes need prior approval.** Before changing anything — source, configs, scripts, tests, or data/state files — the auditor reports to the user and waits for explicit approval, leading with 后果 (what happens if unfixed) → 产生后果的原因 (the cause) → 修改方案 (the proposed patch). Applying a change and then reporting it is a violation, however small.
+**All changes need prior approval.** Before changing anything — source, configs, scripts, tests, or data/state files — the auditor reports to the user and waits for explicit approval, leading with the consequence (what happens if unfixed), then the cause, then the proposed patch. Applying a change and then reporting it is a violation, however small.
 
 ## Install
 
@@ -75,7 +75,7 @@ Every installed agent picks it up on its next session start.
 
 This skill **never runs automatically** — invoke it explicitly:
 
-> "用 delivery-audit 审一下这次交付" · "audit this before we deliver" · "复核这个结果"
+> "audit this before we deliver" · "double-check this result" · "run delivery-audit on the analysis"
 
 ## Repository layout
 
@@ -83,7 +83,7 @@ This skill **never runs automatically** — invoke it explicitly:
 delivery-audit/
 ├── SKILL.md            # the skill — the entire audit procedure
 ├── README.md           # this file
-├── README.zh-CN.md     # 简体中文
+├── README.zh-CN.md     # Chinese version
 ├── LICENSE             # MIT
 └── assets/             # README images (+ HTML sources in assets/src/)
 ```

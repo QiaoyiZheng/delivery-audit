@@ -1,6 +1,6 @@
 ---
 name: delivery-audit
-description: Adversarially audit any unit of work — an experiment, an analysis, a delivery — by decomposing its reasoning chain into typed nodes and auditing each node against raw evidence, fanned out to parallel independent reviewers (Codex, Claude, or harness subagents). Use ONLY when the user explicitly invokes it — e.g. asks to audit, review, double-check, 审核, 复核, or 质疑 a delivery or result. Never run automatically before a delivery.
+description: Adversarially audit any unit of work — an experiment, an analysis, a delivery — by decomposing its reasoning chain into typed nodes and auditing each node against raw evidence, fanned out to parallel independent reviewers (Codex, Claude, or harness subagents). Use ONLY when the user explicitly invokes it — e.g. asks to audit, review, double-check, or challenge a delivery or result, in any language. Never run automatically before a delivery.
 ---
 
 # Delivery Audit
@@ -9,9 +9,9 @@ Stance: the delivery is wrong until proven right. The user is careless, and the 
 
 Most real failures are three kinds — hunt these before anything else:
 
-1. **臆想 (assumption stated as fact)** — "should", "normally", "it prints 0 when done" — never checked.
-2. **口径错误 (definition mismatch)** — the statistic does not mean what the report claims. Example: the progress counter reads 0 because every job crashed, not because the run finished. Every number's semantics must be traced to the code that produces it.
-3. **没看原始证据 (summary over source)** — conclusions drawn from dashboards and aggregates while the trace/log/rows that would refute them sit unopened.
+1. **Assumption stated as fact** — "should", "normally", "it prints 0 when done" — never checked.
+2. **Definition mismatch** — the statistic does not mean what the report claims. Example: the progress counter reads 0 because every job crashed, not because the run finished. Every number's semantics must be traced to the code that produces it.
+3. **Summary over source** — conclusions drawn from dashboards and aggregates while the trace/log/rows that would refute them sit unopened.
 
 When the user reports a result of their own, audit it with the same rigor; a user's number is a claim, not a fact.
 
@@ -46,16 +46,16 @@ The chain is the audit's backbone and goes into the audit packet. Note: the chai
 
 For every node, in order:
 
-- **Definition (口径)**: what exactly does this count or assert? Trace it to the producing code or query (a ≤5-line snippet or one command). State the actual definition in one line. Does it answer the ask from step 1?
+- **Definition**: what exactly does this count or assert? Trace it to the producing code or query (a ≤5-line snippet or one command). State the actual definition in one line. Does it answer the ask from step 1?
 - **Evidence**: open the raw artifact — trace, log, rows — not the summary that cites it. Re-derive the value now.
-- **Assumption (臆想)**: mark every unverified premise inside the node. Check it, or flag the node UNVERIFIED.
+- **Assumption**: mark every unverified premise inside the node. Check it, or flag the node UNVERIFIED.
 - **Semantics probe** for every aggregate/counter: pick one concrete succeeding unit and one concrete failing unit from raw output, and confirm the aggregate counts each correctly. A counter at 0 must be shown to mean "done", not "dead".
 
 Node verdict: VERIFIED / REFUTED / UNVERIFIED.
 
 ### 5. Hunt for missing nodes
 
-Grep the session transcript for errors, retries, warnings, and commands that produced no node in the chain — a swallowed failure is a finding. Grep for "should", "probably", "looks right", "正常", "按理" — each hit is an unchecked assumption.
+Grep the session transcript for errors, retries, warnings, and commands that produced no node in the chain — a swallowed failure is a finding. Grep for "should", "probably", "looks right" and their equivalents in the session's language — each hit is an unchecked assumption.
 
 ### 6. Global checks
 
@@ -67,7 +67,7 @@ Grep the session transcript for errors, retries, warnings, and commands that pro
 
 ### 7. Fan out parallel independent reviewers
 
-Partition the chain and global checks into independent bundles (typical: claims recomputation / 口径 audit / missing-nodes & process / rules & completeness). Spawn one fresh reviewer per bundle in parallel — one batch, not serialized. Prefer mixing model families; same-family reviewers share blind spots:
+Partition the chain and global checks into independent bundles (typical: claims recomputation / definition audit / missing-nodes & process / rules & completeness). Spawn one fresh reviewer per bundle in parallel — one batch, not serialized. Prefer mixing model families; same-family reviewers share blind spots:
 
 - `codex exec --ephemeral --sandbox workspace-write -C <project-root> "<instructions>"` — prerequisites: `<project-root>` must be a git-accepted directory (otherwise pass `--skip-git-repo-check`); `CODEX_HOME` writable; authenticated; network reachable. If a reviewer returns UNVERIFIED on network-dependent checks, treat it as environmental and re-verify locally before accepting.
 - `claude -p --allowedTools "Read,Grep,Glob,Bash" < /tmp/reviewer-prompt.txt` (if installed) — without `--allowedTools`, `-p` mode denies tool calls and the reviewer is blind. Pass the prompt via stdin or a file, or place it after all flags: `--allowedTools` is variadic and can swallow a positional prompt. Bare `Bash` grants full shell access — reviewers need it; never claim they are read-only.
@@ -99,7 +99,7 @@ Required reviewer report format: numbered findings with severity (BLOCKER/MAJOR/
 
 Reproduce every returned finding yourself before accepting it — reviewers hallucinate too. Fix valid findings. A fix that changes code, data, metrics, or claims sends the affected bundles back for re-audit. Cap the loop at three rounds.
 
-**All changes need prior approval.** Before changing anything — source code, configs, scripts, tests, or data/state files, tracked or untracked — report to the user and wait for explicit approval. Lead with 后果 (what happens if left unfixed), then 产生后果的原因 (the cause), then 修改方案 (the proposed patch). Applying a change and then reporting it is a violation, however small the change.
+**All changes need prior approval.** Before changing anything — source code, configs, scripts, tests, or data/state files, tracked or untracked — report to the user and wait for explicit approval. Lead with the consequence (what happens if left unfixed), then the cause of that consequence, then the proposed patch. Applying a change and then reporting it is a violation, however small the change.
 
 ## Verdict and report
 
@@ -114,7 +114,7 @@ A claim is **load-bearing** when the asked question or a downstream decision dep
 Report in this order:
 
 1. **Findings**: numbered, severity (BLOCKER / MAJOR / MINOR), concrete evidence (command + output, `file:line`), required fix.
-2. **Chain table**: every node → VERIFIED / REFUTED / UNVERIFIED, with the 口径 line for each computation node.
+2. **Chain table**: every node → VERIFIED / REFUTED / UNVERIFIED, with the definition line for each computation node.
 3. **Claims table**: every claim from step 2 → VERIFIED (with fresh evidence) / REFUTED / UNVERIFIED.
 4. **Verdict**: `DO NOT DELIVER` while any of these stands — a BLOCKER finding; any REFUTED claim; any UNVERIFIED load-bearing claim; any MAJOR neither fixed nor explicitly accepted by the user; or the fix/re-audit loop hitting its three-round cap with open findings. Otherwise `DELIVER`, listing residual MINOR issues.
 

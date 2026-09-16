@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/hero.png" alt="delivery-audit" width="100%">
+  <img src="assets/hero-zh.png" alt="delivery-audit" width="100%">
   <p>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-059669.svg" alt="MIT 协议"></a>
     <img src="https://img.shields.io/badge/trigger-explicit--only-DC2626.svg" alt="仅显式调用">
