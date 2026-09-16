@@ -1,0 +1,39 @@
+<!doctype html><meta charset="utf-8"><style>
+  * { margin:0; box-sizing:border-box; }
+  body { width:1280px; height:760px; background:#FCFCFD; font-family:"Noto Sans CJK SC","PingFang SC","Helvetica Neue",Inter,sans-serif; display:flex; align-items:center; justify-content:center; }
+  .card { width:1080px; background:#fff; border:1px solid #E8E8EC; border-radius:18px;
+          box-shadow:0 1px 3px rgba(16,16,20,.05), 0 24px 60px rgba(16,16,20,.07); overflow:hidden; }
+  .chrome { display:flex; align-items:center; gap:8px; padding:18px 26px; border-bottom:1px solid #F0F0F3; }
+  .d { width:11px; height:11px; border-radius:50%; background:#E4E4E9; }
+  .title { margin-left:14px; font-family:"DejaVu Sans Mono",monospace; font-size:13.5px; color:#8E8E96; }
+  .body { padding:30px 34px; }
+  .h { font-size:11.5px; letter-spacing:.2em; color:#A1A1AA; font-weight:600; margin:6px 0 14px; }
+  .row { display:flex; align-items:center; gap:14px; padding:11px 0; border-bottom:1px solid #F4F4F6; font-size:16.5px; color:#3F3F46; }
+  .row:last-child { border-bottom:none; }
+  .chip { font-family:"DejaVu Sans Mono",monospace; font-size:11.5px; font-weight:700; border-radius:6px; padding:4px 10px; }
+  .b { color:#DC2626; background:#FEF2F2; border:1px solid #FECACA; }
+  .m { color:#B45309; background:#FFFBEB; border:1px solid #FDE68A; }
+  .n { color:#52525B; background:#F4F4F5; border:1px solid #E4E4E7; }
+  .st { margin-left:auto; font-size:13.5px; color:#8E8E96; font-family:"DejaVu Sans Mono",monospace; }
+  .fix { color:#059669; }
+  .claims { display:flex; gap:22px; padding:14px 0 4px; font-family:"DejaVu Sans Mono",monospace; font-size:14.5px; }
+  .ok { color:#059669; } .bad { color:#DC2626; }
+  .verdict { margin:22px 34px 30px; background:#FEF2F2; border:1px solid #FECACA; border-radius:14px;
+             padding:20px 26px; display:flex; align-items:center; gap:18px; }
+  .v { font-family:"DejaVu Sans Mono",monospace; font-size:22px; font-weight:700; color:#DC2626; }
+  .why { font-size:14.5px; color:#7F1D1D; }
+  .foot { padding:0 34px 26px; font-family:"DejaVu Sans Mono",monospace; font-size:12.5px; color:#A1A1AA; }
+</style>
+<div class="card">
+  <div class="chrome"><span class="d"></span><span class="d"></span><span class="d"></span><span class="title">审计报告 — delivery-audit skill 创生审计</span></div>
+  <div class="body">
+    <div class="h">发现 FINDINGS</div>
+    <div class="row"><span class="chip b">BLOCKER</span>判定规则欠定——被证伪的结论不产生任何后果<span class="st fix">已修复 ✓</span></div>
+    <div class="row"><span class="chip m">MAJOR</span>文档中的 <span style="font-family:'DejaVu Sans Mono',monospace;font-size:14.5px">claude -p</span> 形式产出盲人审核者<span class="st fix">已修复 ✓</span></div>
+    <div class="row"><span class="chip n">MINOR</span>opencode 覆盖只有推断、从未实证<span class="st">挂起 → LESSONS.md</span></div>
+    <div class="h" style="margin-top:24px">结论 CLAIMS</div>
+    <div class="claims"><span>C1 <span class="ok">VERIFIED</span></span><span>C2 <span class="bad">REFUTED</span> → 已修复</span><span>C3 <span class="ok">VERIFIED</span></span><span>C4 <span class="ok">VERIFIED</span></span><span>C5 <span class="ok">VERIFIED</span></span></div>
+  </div>
+  <div class="verdict"><span class="v">DO NOT DELIVER</span><span class="why">审计当时存在被证伪的结论——修复并复审通过后才允许交付</span></div>
+  <div class="foot">3 名审核者 · codex + claude + harness 子代理 · 一批齐发 · git 守卫干净 · 每条发现都经亲自复现</div>
+</div>

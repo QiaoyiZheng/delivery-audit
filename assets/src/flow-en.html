@@ -1,0 +1,52 @@
+<!doctype html><meta charset="utf-8"><style>
+  * { margin:0; box-sizing:border-box; }
+  body { width:1600px; height:1010px; background:#FCFCFD; font-family:"Helvetica Neue",Inter,"Noto Sans CJK SC","PingFang SC",sans-serif; padding:64px 84px; }
+  .eyebrow { font-size:12px; letter-spacing:.22em; color:#8E8E96; font-weight:600; }
+  h2 { font-size:40px; font-weight:700; color:#101014; letter-spacing:-.02em; margin-top:12px; }
+  .traps { display:flex; gap:14px; margin:30px 0 40px; }
+  .trap { background:#fff; border:1px solid #E8E8EC; border-radius:999px; padding:11px 22px; font-size:16px; color:#3F3F46; }
+  .trap b { color:#DC2626; font-weight:600; }
+  .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  .step { background:#fff; border:1px solid #E8E8EC; border-radius:16px; padding:24px 26px; min-height:158px;
+          box-shadow:0 1px 2px rgba(16,16,20,.04); }
+  .num { font-family:"DejaVu Sans Mono",monospace; font-size:13px; color:#DC2626; font-weight:700; letter-spacing:.08em; }
+  .t { font-size:19px; font-weight:600; color:#101014; margin-top:10px; }
+  .s { font-size:14px; color:#8E8E96; margin-top:7px; line-height:1.45; }
+  .fanout { margin-top:22px; background:#fff; border:1px solid #E8E8EC; border-radius:16px; padding:22px 28px;
+            display:flex; align-items:center; gap:18px; box-shadow:0 1px 2px rgba(16,16,20,.04); }
+  .fo-lbl { font-family:"DejaVu Sans Mono",monospace; font-size:13px; color:#DC2626; font-weight:700; }
+  .pill { font-family:"DejaVu Sans Mono",monospace; font-size:15px; background:#F4F4F6; border:1px solid #E8E8EC; border-radius:10px; padding:9px 16px; color:#3F3F46; }
+  .note { font-size:14px; color:#8E8E96; margin-left:auto; }
+  .verdicts { display:flex; gap:16px; margin-top:22px; align-items:center; }
+  .v { font-family:"DejaVu Sans Mono",monospace; font-size:16px; font-weight:700; border-radius:10px; padding:12px 22px; }
+  .v-no { color:#DC2626; background:#FEF2F2; border:1px solid #FECACA; }
+  .v-yes { color:#059669; background:#ECFDF5; border:1px solid #A7F3D0; }
+  .rule { font-size:13.5px; color:#8E8E96; margin-left:8px; }
+</style>
+<div class="eyebrow">THE PROCEDURE</div>
+<h2>How it works</h2>
+<div class="traps">
+  <div class="trap">Hunt first: <b>臆想</b>&nbsp;assumption as fact</div>
+  <div class="trap"><b>口径错误</b>&nbsp;definition mismatch</div>
+  <div class="trap"><b>没看原始证据</b>&nbsp;summary over source</div>
+</div>
+<div class="grid">
+  <div class="step"><div class="num">01</div><div class="t">Reconstruct the ask</div><div class="s">Every requirement, verbatim. No evidence → NOT MET.</div></div>
+  <div class="step"><div class="num">02</div><div class="t">Inventory the claims</div><div class="s">Each claim a defendant; must-not-change invariants included.</div></div>
+  <div class="step"><div class="num">03</div><div class="t">Decompose the chain</div><div class="s">Typed nodes, premise → delivery-claim.</div></div>
+  <div class="step"><div class="num">04</div><div class="t">Audit each node</div><div class="s">口径 · raw evidence · assumptions · semantics probe.</div></div>
+  <div class="step"><div class="num">05</div><div class="t">Hunt missing nodes</div><div class="s">Grep the transcript for swallowed failures.</div></div>
+  <div class="step"><div class="num">06</div><div class="t">Global checks</div><div class="s">Rules · completeness · regression · real surface · falsification.</div></div>
+  <div class="step"><div class="num">07</div><div class="t">Fan out reviewers</div><div class="s">Independent bundles, mixed model families.</div></div>
+  <div class="step"><div class="num">08</div><div class="t">Verify, fix, re-audit</div><div class="s">Reproduce every finding. ≤ 3 rounds. Approval gate.</div></div>
+</div>
+<div class="fanout">
+  <span class="fo-lbl">07 →</span>
+  <span class="pill">codex exec</span><span class="pill">claude -p</span><span class="pill">harness subagents</span>
+  <span class="note">one batch, in parallel — reviewers verify, never edit</span>
+</div>
+<div class="verdicts">
+  <span class="v v-no">DO NOT DELIVER</span>
+  <span class="v v-yes">DELIVER</span>
+  <span class="rule">any REFUTED claim, standing BLOCKER, or unaccepted MAJOR blocks delivery</span>
+</div>

@@ -1,0 +1,52 @@
+<!doctype html><meta charset="utf-8"><style>
+  * { margin:0; box-sizing:border-box; }
+  body { width:1600px; height:1010px; background:#FCFCFD; font-family:"Noto Sans CJK SC","PingFang SC","Helvetica Neue",Inter,sans-serif; padding:64px 84px; }
+  .eyebrow { font-size:12px; letter-spacing:.22em; color:#8E8E96; font-weight:600; }
+  h2 { font-size:40px; font-weight:700; color:#101014; letter-spacing:-.02em; margin-top:12px; }
+  .traps { display:flex; gap:14px; margin:30px 0 40px; }
+  .trap { background:#fff; border:1px solid #E8E8EC; border-radius:999px; padding:11px 22px; font-size:16px; color:#3F3F46; }
+  .trap b { color:#DC2626; font-weight:600; }
+  .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  .step { background:#fff; border:1px solid #E8E8EC; border-radius:16px; padding:24px 26px; min-height:158px;
+          box-shadow:0 1px 2px rgba(16,16,20,.04); }
+  .num { font-family:"DejaVu Sans Mono",monospace; font-size:13px; color:#DC2626; font-weight:700; letter-spacing:.08em; }
+  .t { font-size:19px; font-weight:600; color:#101014; margin-top:10px; }
+  .s { font-size:14px; color:#8E8E96; margin-top:7px; line-height:1.5; }
+  .fanout { margin-top:22px; background:#fff; border:1px solid #E8E8EC; border-radius:16px; padding:22px 28px;
+            display:flex; align-items:center; gap:18px; box-shadow:0 1px 2px rgba(16,16,20,.04); }
+  .fo-lbl { font-family:"DejaVu Sans Mono",monospace; font-size:13px; color:#DC2626; font-weight:700; }
+  .pill { font-family:"DejaVu Sans Mono",monospace; font-size:15px; background:#F4F4F6; border:1px solid #E8E8EC; border-radius:10px; padding:9px 16px; color:#3F3F46; }
+  .note { font-size:14px; color:#8E8E96; margin-left:auto; }
+  .verdicts { display:flex; gap:16px; margin-top:22px; align-items:center; }
+  .v { font-family:"DejaVu Sans Mono",monospace; font-size:16px; font-weight:700; border-radius:10px; padding:12px 22px; }
+  .v-no { color:#DC2626; background:#FEF2F2; border:1px solid #FECACA; }
+  .v-yes { color:#059669; background:#ECFDF5; border:1px solid #A7F3D0; }
+  .rule { font-size:13.5px; color:#8E8E96; margin-left:8px; }
+</style>
+<div class="eyebrow">工作流程</div>
+<h2>它是怎么审的</h2>
+<div class="traps">
+  <div class="trap">优先猎杀：<b>臆想</b>&nbsp;把假设当事实</div>
+  <div class="trap"><b>口径错误</b>&nbsp;统计口径与结论不符</div>
+  <div class="trap"><b>没看原始证据</b>&nbsp;看摘要不看日志</div>
+</div>
+<div class="grid">
+  <div class="step"><div class="num">01</div><div class="t">重建原始诉求</div><div class="s">逐字列出每条要求；无证据即未满足。</div></div>
+  <div class="step"><div class="num">02</div><div class="t">清点结论清单</div><div class="s">每条结论都是被告；含"不许变"的不变量。</div></div>
+  <div class="step"><div class="num">03</div><div class="t">拆解推理链</div><div class="s">类型化节点，从前提推到交付结论。</div></div>
+  <div class="step"><div class="num">04</div><div class="t">逐节点审计</div><div class="s">口径 · 原始证据 · 臆想 · 语义探针。</div></div>
+  <div class="step"><div class="num">05</div><div class="t">追查遗漏节点</div><div class="s">grep 会话记录，找被吞掉的失败。</div></div>
+  <div class="step"><div class="num">06</div><div class="t">全局检查</div><div class="s">规则 · 完整性 · 回归影响 · 真实界面 · 证伪。</div></div>
+  <div class="step"><div class="num">07</div><div class="t">并行审核者</div><div class="s">独立分组，混合模型家族防同源盲区。</div></div>
+  <div class="step"><div class="num">08</div><div class="t">验证·修复·复审</div><div class="s">每条发现亲自复现；≤3 轮；改动先报批。</div></div>
+</div>
+<div class="fanout">
+  <span class="fo-lbl">07 →</span>
+  <span class="pill">codex exec</span><span class="pill">claude -p</span><span class="pill">harness 子代理</span>
+  <span class="note">一批齐发、并行执行——审核者只验证，不改代码</span>
+</div>
+<div class="verdicts">
+  <span class="v v-no">DO NOT DELIVER</span>
+  <span class="v v-yes">DELIVER</span>
+  <span class="rule">任何被证伪的结论、未解的 BLOCKER、未被接受的 MAJOR，都阻断交付</span>
+</div>
