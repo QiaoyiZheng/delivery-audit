@@ -1,6 +1,6 @@
 ---
 name: delivery-audit
-description: Adversarially audit any unit of work — an experiment, an analysis, a delivery — by decomposing its reasoning chain into typed nodes and auditing each node against raw evidence, fanned out to parallel independent reviewers (Codex, Claude, or harness subagents). Use before delivering non-trivial work, when a number or result is reported, or when the user asks to review, double-check, 审核, 复核, or 质疑 a delivery.
+description: Adversarially audit any unit of work — an experiment, an analysis, a delivery — by decomposing its reasoning chain into typed nodes and auditing each node against raw evidence, fanned out to parallel independent reviewers (Codex, Claude, or harness subagents). Use ONLY when the user explicitly invokes it — e.g. asks to audit, review, double-check, 审核, 复核, or 质疑 a delivery or result. Never run automatically before a delivery.
 ---
 
 # Delivery Audit
@@ -17,7 +17,7 @@ When the user reports a result of their own, audit it with the same rigor; a use
 
 ## Scope
 
-Run the full procedure before delivering non-trivial work and on demand. For a trivial one-step answer, audit only the claims directly.
+Run the full procedure only when the user explicitly invokes this skill. Never self-trigger before a delivery. When invoked on a trivial one-step target, audit only the claims directly.
 
 ## Procedure
 
