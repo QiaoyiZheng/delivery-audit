@@ -82,7 +82,6 @@ done
 ```
 delivery-audit/
 ├── SKILL.md            # skill 本体——全部审计流程
-├── LESSONS.md          # 实战教训；经 owner 审阅后折入 SKILL.md
 ├── README.md           # English
 ├── README.zh-CN.md     # 本文件
 ├── LICENSE             # MIT
@@ -91,7 +90,7 @@ delivery-audit/
 
 ## 教训工作流
 
-实战审计的教训先记入 `LESSONS.md`，状态标记 `[open]` / `[folded]`。owner 定期审阅，接受的教训折入 `SKILL.md`、同步到所有安装位置并推送。折入之前，编排者运行审计前应先读 `LESSONS.md`。
+实战审计的教训记入本地 `LESSONS.md`（随规范安装位置维护，**永不提交、永不发布**），状态标记 `[open]` / `[folded]`。owner 定期审阅，接受的教训折入 `SKILL.md`、同步到所有安装位置并推送。折入之前，编排者运行审计前应先读本地 `LESSONS.md`。
 
 ## 许可
 

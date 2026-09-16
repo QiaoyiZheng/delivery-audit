@@ -82,7 +82,6 @@ This skill **never runs automatically** — invoke it explicitly:
 ```
 delivery-audit/
 ├── SKILL.md            # the skill — the entire audit procedure
-├── LESSONS.md          # live-run lessons; folded into SKILL.md after owner review
 ├── README.md           # this file
 ├── README.zh-CN.md     # 简体中文
 ├── LICENSE             # MIT
@@ -91,7 +90,7 @@ delivery-audit/
 
 ## Lessons workflow
 
-Lessons from live audits accumulate in `LESSONS.md` with `[open]` / `[folded]` status. The owner reviews them periodically; accepted lessons get folded into `SKILL.md`, re-synced to all install locations, and pushed. Until folded, orchestrators should read `LESSONS.md` before running an audit.
+Lessons from live audits accumulate in a local `LESSONS.md` (maintained alongside the canonical install, **never committed or published**) with `[open]` / `[folded]` status. The owner reviews them periodically; accepted lessons get folded into `SKILL.md`, re-synced to all install locations, and pushed. Until folded, orchestrators should read the local `LESSONS.md` before running an audit.
 
 ## License
 
