@@ -29,6 +29,8 @@ Re-read the user's original messages — not your summary of them. List every ex
 
 Write down every claim the delivery makes: files changed, behaviors fixed, numbers, scores, "tests pass", "X works". Each claim is a defendant. Every one ends the audit as VERIFIED (with fresh evidence), REFUTED, or UNVERIFIED.
 
+The inventory must also include the must-not-change invariants the diff could touch — pre-existing behaviors the user relies on, even when they are not part of this task's ask.
+
 ### 3. Decompose the reasoning chain
 
 Rebuild the whole task as a numbered chain of typed nodes — one node per step of reasoning, chronological, from premise to final claim. Each node records:
@@ -59,6 +61,7 @@ Grep the session transcript for errors, retries, warnings, and commands that pro
 
 - **Rule compliance**: read the project's rule files (e.g. `AGENTS.md`); extract every MUST/NEVER this task touched; verify each concretely (immutable inputs show an empty `git diff`, required checks actually ran).
 - **Completeness**: diff contains no stubs, TODOs, debug leftovers; every removed/renamed symbol's callers migrated (LSP references, not memory); no test deleted, weakened, or re-pinned; delivered scope matches step 1 — no silent narrowing, no invented extra scope.
+- **Regression / impact**: enumerate what the change touches beyond its target — shared state, configs, callers, precedence rules, sibling behaviors. Re-run the pre-existing checks covering them (existing test suite, invariants established by earlier tasks) after the change, never from memory. A requirement from an earlier task that this change could affect is a claim and must be re-verified.
 - **Real surface**: run the deliverable the way its consumer will — invoke the binary/CLI, drive the UI, call the library from a real caller. A passing test suite is not proof the user-facing path works.
 - **Falsification**: bounded effort to break the result — boundary inputs, empty/adversarial cases, the opposite configuration. One concrete counterexample outweighs any number of passing happy paths.
 
