@@ -66,8 +66,8 @@ Grep the session transcript for errors, retries, warnings, and commands that pro
 
 Partition the chain and global checks into independent bundles (typical: claims recomputation / 口径 audit / missing-nodes & process / rules & completeness). Spawn one fresh reviewer per bundle in parallel — one batch, not serialized. Prefer mixing model families; same-family reviewers share blind spots:
 
-- `codex exec --ephemeral --sandbox workspace-write -C <project-root> "<instructions>"`
-- `claude -p "<instructions>"` (if installed)
+- `codex exec --ephemeral --sandbox workspace-write -C <project-root> "<instructions>"` — prerequisites: `<project-root>` must be a git-accepted directory (otherwise pass `--skip-git-repo-check`); `CODEX_HOME` writable; authenticated; network reachable. If a reviewer returns UNVERIFIED on network-dependent checks, treat it as environmental and re-verify locally before accepting.
+- `claude -p --allowedTools "Read,Grep,Glob,Bash" < /tmp/reviewer-prompt.txt` (if installed) — without `--allowedTools`, `-p` mode denies tool calls and the reviewer is blind. Pass the prompt via stdin or a file, or place it after all flags: `--allowedTools` is variadic and can swallow a positional prompt. Bare `Bash` grants full shell access — reviewers need it; never claim they are read-only.
 - harness `reviewer` subagents via the task tool
 
 Reviewers must be able to run real commands, including ones that write logs and results — a read-only sandbox makes verification theatrical. Forbid source and config edits in the prompt instead, snapshot `git status --porcelain` before and after, and treat any unexpected source change as a finding.
@@ -96,16 +96,24 @@ Required reviewer report format: numbered findings with severity (BLOCKER/MAJOR/
 
 Reproduce every returned finding yourself before accepting it — reviewers hallucinate too. Fix valid findings. A fix that changes code, data, metrics, or claims sends the affected bundles back for re-audit. Cap the loop at three rounds.
 
-**Source changes need prior approval.** Before modifying any source code — tracked or untracked: harness, scripts, configs, tests — report the finding and the proposed patch to the user and wait for explicit approval. Applying a source patch and then reporting it is a violation, however small the patch. Live data/state repairs that follow an already-documented precedent in the repo (e.g. normalizing a state file the same way a previous recovery note records) may be applied immediately to stop an armed failure, but must be reported at once with before/after evidence.
+**All changes need prior approval.** Before changing anything — source code, configs, scripts, tests, or data/state files, tracked or untracked — report to the user and wait for explicit approval. Lead with 后果 (what happens if left unfixed), then 产生后果的原因 (the cause), then 修改方案 (the proposed patch). Applying a change and then reporting it is a violation, however small the change.
 
 ## Verdict and report
+
+### Severity
+
+- **BLOCKER** — the delivery's output can be wrong, or a required step cannot run. A REFUTED or unverifiable load-bearing claim is a BLOCKER.
+- **MAJOR** — materially misleading, or will mislead a fresh executor, while the core result stands. Examples: a supporting claim REFUTED; a documented command that fails as written; scope silently narrowed.
+- **MINOR** — wording or polish with no behavioral consequence.
+
+A claim is **load-bearing** when the asked question or a downstream decision depends on it (a headline number, a done/not-done answer); otherwise it is supporting.
 
 Report in this order:
 
 1. **Findings**: numbered, severity (BLOCKER / MAJOR / MINOR), concrete evidence (command + output, `file:line`), required fix.
 2. **Chain table**: every node → VERIFIED / REFUTED / UNVERIFIED, with the 口径 line for each computation node.
 3. **Claims table**: every claim from step 2 → VERIFIED (with fresh evidence) / REFUTED / UNVERIFIED.
-4. **Verdict**: `DO NOT DELIVER` while any BLOCKER stands or any load-bearing claim is UNVERIFIED; otherwise `DELIVER`, listing residual MINOR issues.
+4. **Verdict**: `DO NOT DELIVER` while any of these stands — a BLOCKER finding; any REFUTED claim; any UNVERIFIED load-bearing claim; any MAJOR neither fixed nor explicitly accepted by the user; or the fix/re-audit loop hitting its three-round cap with open findings. Otherwise `DELIVER`, listing residual MINOR issues.
 
 Never soften a finding because the overall result looks good. A correct delivery reported with a false supporting claim is still misreporting.
 
