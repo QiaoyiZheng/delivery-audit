@@ -73,6 +73,8 @@ Partition the chain and global checks into independent bundles (typical: claims 
 - `claude -p --allowedTools "Read,Grep,Glob,Bash" < /tmp/reviewer-prompt.txt` (if installed) — without `--allowedTools`, `-p` mode denies tool calls and the reviewer is blind. Pass the prompt via stdin or a file, or place it after all flags: `--allowedTools` is variadic and can swallow a positional prompt. Bare `Bash` grants full shell access — reviewers need it; never claim they are read-only.
 - harness `reviewer` subagents via the task tool
 
+Default panel: all three channels. codex + claude without harness subagents is an acceptable panel. Non-negotiable regardless of panel: at least two independent reviewers from different model families, dispatched as one batch, in parallel.
+
 Reviewers must be able to run real commands, including ones that write logs and results — a read-only sandbox makes verification theatrical. Forbid source and config edits in the prompt instead, snapshot `git status --porcelain` before and after, and treat any unexpected source change as a finding.
 
 Each reviewer gets the audit packet — a scratch file such as `/tmp/delivery-audit-<ts>.md` containing facts and pointers only:

@@ -51,6 +51,8 @@ claude -p --allowedTools "Read,Grep,Glob,Bash" < /tmp/reviewer-prompt.txt
 
 Reviewers must run real commands (a read-only sandbox makes verification theatrical) but never edit source; a `git status --porcelain` guard before and after turns any unexpected change into a finding.
 
+The default panel is all three channels; codex + claude alone is acceptable. Non-negotiable: at least two reviewers from different model families, one batch, in parallel.
+
 ## Approval gate
 
 **All changes need prior approval.** Before changing anything — source, configs, scripts, tests, or data/state files — the auditor reports to the user and waits for explicit approval, leading with the consequence (what happens if unfixed), then the cause, then the proposed patch. Applying a change and then reporting it is a violation, however small.
